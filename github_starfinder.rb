@@ -7,11 +7,10 @@ account_name = gets.chomp
 response = Net::HTTP.get(URI.parse("https://api.github.com/users/#{account_name}/repos"))
 repositories = JSON.parse(response)
 
+star_total = 0
 repositories.each do |repo|
 	puts "#{repo['name']}: #{repo['stargazers_count']} stars"
-
-
-	# git = Git.clone(repo["clone_url"], repo["name"], :path => "my_repositories")
-	# git.add_remote("originate", repo["clone_url"])
-	# puts repo["clone_url"]
+	star_total += repo['stargazers_count'].to_i
 end
+
+puts "This account has a total of #{star_total} stars."
